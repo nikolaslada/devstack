@@ -4,16 +4,18 @@ MAINTAINER Nikolas Lada <nikolas.lada@gmail.com>
 
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
+
 ENV APACHE_LOG_DIR /var/log/apache2
 ENV APACHE_LOCK_DIR /var/lock/apache2
 ENV APACHE_PID_FILE /var/run/apache2.pid
-ENV PHP_MODS_DIR=/etc/php/7.0/mods-available
+
 ENV APACHE_MOD_PHP_DIR=/etc/php/7.0/apache2
 ENV APACHE_MOD_PHP_CONF_DIR=${APACHE_MOD_PHP_DIR}/conf.d
+
+ENV PHP_MODS_DIR=/etc/php/7.0/mods-available
 ENV TZ=Europe/Prague
 
 RUN apt update && \
-    apt update -y && \
     apt dist-upgrade -y && \
     apt install -y wget curl apt-transport-https ca-certificates && \
     apt update && \
@@ -40,7 +42,7 @@ RUN apt update && \
         php-xdebug \
         php-xmlrpc \
         php-zip && \
-    ln -s ${PHP_MODS_DIR}/custom.ini ${APACHE_MOD_PHP_DIR}/999-custom.ini && \
+    ln -s ${PHP_MODS_DIR}/devel.ini ${APACHE_MOD_PHP_DIR}/999-devel.ini && \
     apt update && \
     apt install -y \
         apache2 \
@@ -56,9 +58,10 @@ RUN apt update && \
     apt autoremove -y && \
     rm -rf /var/lib/apt/lists/* /var/lib/log/* /tmp/* /var/tmp/*
 
-ADD conf.d/custom.ini ${PHP_MODS_DIR}/custom.ini
+ADD conf.d/devel.ini ${PHP_MODS_DIR}/devel.ini
+ADD sites /etc/apache2/sites-enabled
+ADD conf/devel.conf /etc/apache2/conf-enabled/999-devel.conf
 
-VOLUME /srv
 WORKDIR /srv
 
 EXPOSE 80
