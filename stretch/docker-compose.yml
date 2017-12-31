@@ -1,0 +1,31 @@
+version: '2'
+
+services:
+  apache-mod-php:
+    image: nikolaslada/stretch-devstack:apache-mod-php
+
+    networks:
+      default:
+        ipv4_address: 172.10.10.2
+
+    volumes_from:
+      - data
+
+    ports:
+      - 80:80
+      - 443:443
+
+  data:
+    image: busybox
+
+    volumes:
+       - /home/nikolas/projects/test:/srv
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.10.10.0/24
+        gateway: 172.10.10.1
