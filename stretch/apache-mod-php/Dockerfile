@@ -15,11 +15,11 @@ ENV APACHE_MOD_PHP_CONF_DIR=${APACHE_MOD_PHP_DIR}/conf.d
 ENV PHP_MODS_DIR=/etc/php/7.0/mods-available
 ENV TZ=Europe/Prague
 
-RUN apt update && \
-    apt dist-upgrade -y && \
-    apt install -y wget curl apt-transport-https ca-certificates && \
-    apt update && \
-    apt install -y --no-install-recommends \
+RUN apt-get update && \
+    apt-get dist-upgrade -y && \
+    apt-get install -y wget curl apt-transport-https ca-certificates && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
         apache2 \
         apache2-bin \
         apache2-data \
@@ -47,18 +47,17 @@ RUN apt update && \
         php-xmlrpc \
         php-zip \
         libapache2-mod-php && \
-    apt update && \
+    apt-get update && \
     # ln -s ${PHP_MODS_DIR}/devel.ini ${APACHE_MOD_PHP_DIR}/999-devel.ini && \
-    apt update && \
     # a2enmod include && \
     # a2enmod rewrite && \
     # a2enmod http2 && \
     # a2enmod php7.0 && \
     # a2enmod mpm_event && \
     # rm /etc/apache2/sites-enabled/000-default.conf && \
-    apt clean -y && \
-    apt autoclean -y && \
-    apt autoremove -y && \
+    apt-get clean -y && \
+    apt-get autoclean -y && \
+    apt-get autoremove -y && \
     # rm -rf /var/lib/apt/lists/* /var/lib/log/* /tmp/* /var/tmp/*
 
 ADD conf.d/devel.ini ${PHP_MODS_DIR}/devel.ini
