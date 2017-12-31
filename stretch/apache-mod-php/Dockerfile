@@ -50,11 +50,11 @@ RUN apt-get update && \
     apt-get update && \
     # ln -s ${PHP_MODS_DIR}/devel.ini ${APACHE_MOD_PHP_CONF_DIR}/100-devel.ini && 
     a2dismod mpm_prefork && \
+    a2enmod mpm_event && \
     a2enmod include && \
     a2enmod rewrite && \
     a2enmod http2 && \
     a2enmod php7.0 && \
-    a2enmod mpm_event && \
     rm /etc/apache2/sites-enabled/000-default.conf && \
     apt-get clean -y && \
     apt-get autoclean -y && \
