@@ -17,9 +17,10 @@ ENV TZ=Europe/Prague
 
 RUN apt update && \
     apt dist-upgrade -y && \
-    apt install -y wget curl apt-transport-https ca-certificates && \
+    apt install -y wget curl apt-transport-https ca-certificates apache2 apache2-bin apache2-data && \
     apt update && \
     apt install -y --no-install-recommends \
+        php \
         php-apcu \
         php-bcmath \
         php-bz2 \
@@ -41,12 +42,10 @@ RUN apt update && \
         php-sqlite3 \
         php-xdebug \
         php-xmlrpc \
-        php-zip && \
+        php-zip \
+        libapache2-mod-php && \
     ln -s ${PHP_MODS_DIR}/devel.ini ${APACHE_MOD_PHP_DIR}/999-devel.ini && \
     apt update && \
-    apt install -y \
-        apache2 \
-        libapache2-mod-php && \
     a2enmod include && \
     a2enmod rewrite && \
     a2enmod http2 && \
