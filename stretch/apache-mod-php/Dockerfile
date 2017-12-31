@@ -49,9 +49,6 @@ RUN apt-get update && \
         libapache2-mod-php && \
     apt-get update && \
     # ln -s ${PHP_MODS_DIR}/devel.ini ${APACHE_MOD_PHP_CONF_DIR}/100-devel.ini && 
-    a2dismod php7.0 && \
-    a2dismod mpm_prefork && \
-    a2enmod mpm_event && \
     a2enmod include && \
     a2enmod rewrite && \
     a2enmod http2 && \
