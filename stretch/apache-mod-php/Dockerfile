@@ -17,12 +17,12 @@ ENV TZ=Europe/Prague
 
 RUN apt-get update && \
     apt-get dist-upgrade -y && \
-    apt-get install -y wget curl apt-transport-https ca-certificates && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
         apache2 \
         apache2-bin \
         apache2-data \
+        apache2-utils \
         php \
         php-apcu \
         php-bcmath \
@@ -48,21 +48,21 @@ RUN apt-get update && \
         php-zip \
         libapache2-mod-php && \
     apt-get update && \
-    # ln -s ${PHP_MODS_DIR}/devel.ini ${APACHE_MOD_PHP_DIR}/999-devel.ini && \
-    # a2enmod include && \
-    # a2enmod rewrite && \
-    # a2enmod http2 && \
-    # a2enmod php7.0 && \
-    # a2enmod mpm_event && \
-    # rm /etc/apache2/sites-enabled/000-default.conf && \
+    # ln -s ${PHP_MODS_DIR}/devel.ini ${APACHE_MOD_PHP_CONF_DIR}/100-devel.ini && 
+    a2enmod include && \
+    a2enmod rewrite && \
+    a2enmod http2 && \
+    a2enmod php7.0 && \
+    a2enmod mpm_event && \
+    rm /etc/apache2/sites-enabled/000-default.conf && \
     apt-get clean -y && \
     apt-get autoclean -y && \
     apt-get autoremove -y && \
-    # rm -rf /var/lib/apt/lists/* /var/lib/log/* /tmp/* /var/tmp/*
+    rm -rf /var/lib/apt/lists/* /var/lib/log/* /tmp/* /var/tmp/*
 
-ADD conf.d/devel.ini ${PHP_MODS_DIR}/devel.ini
-ADD sites /etc/apache2/sites-enabled
+#ADD conf.d/devel.ini ${PHP_MODS_DIR}/devel.ini
 ADD conf/devel.conf /etc/apache2/conf-enabled/999-devel.conf
+ADD sites /etc/apache2/sites-enabled
 
 WORKDIR /srv
 
