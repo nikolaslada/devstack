@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+cd $(pwd $0)
+
+# Setup public key
+if [ -f ~/.ssh/id_rsa.pub ]; then
+    mkdir -p ./.ssh
+    cat ~/.ssh/id_rsa.pub > .ssh/authorized_keys
+else
+    echo -e "\033[0;31mFailed to determine your public SSH key\033[0m"
+    echo "Please add your public key to: ./.ssh/authorized_keys"
+fi
+
+# Setup environment file
+mkdir -p ./conf
+cat <<EOF > ./conf/env_user
+USER_ID=$(id -u)
+USER_CREATE=$USER
+EOF
