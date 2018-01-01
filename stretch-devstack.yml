@@ -6,7 +6,7 @@ services:
 
     networks:
       default:
-        ipv4_address: 172.10.10.5
+        ipv4_address: 172.10.10.2
 
     volumes_from:
       - data
@@ -19,7 +19,7 @@ services:
     image: busybox
 
     volumes:
-       - /home/nikolas/projects/test:/srv
+       - ./data:/srv
 
 networks:
   default:
@@ -28,4 +28,4 @@ networks:
       driver: default
       config:
       - subnet: 172.10.10.0/24
-        gateway: 172.10.10.3
+        gateway: 172.10.10.1
