@@ -33,7 +33,6 @@ RUN apt-get update && \
         php-apcu \
         php-bcmath \
         php-bz2 \
-        php-cli \
         php-curl \
         php-gd \
         php-geoip \
