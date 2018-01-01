@@ -48,7 +48,7 @@ RUN apt-get update && \
         php-zip \
         libapache2-mod-php && \
     apt-get update && \
-    # ln -s ${PHP_MODS_DIR}/devel.ini ${APACHE_MOD_PHP_CONF_DIR}/100-devel.ini && 
+    ln -s ${PHP_MODS_DIR}/devel.ini ${APACHE_MOD_PHP_CONF_DIR}/100-devel.ini && 
     a2enmod include && \
     a2enmod rewrite && \
     a2enmod http2 && \
@@ -59,7 +59,7 @@ RUN apt-get update && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/* /var/lib/log/* /tmp/* /var/tmp/*
 
-#ADD conf.d/devel.ini ${PHP_MODS_DIR}/devel.ini
+ADD conf.d/devel.ini ${PHP_MODS_DIR}/devel.ini
 ADD conf/devel.conf /etc/apache2/conf-enabled/999-devel.conf
 ADD sites /etc/apache2/sites-enabled
 
