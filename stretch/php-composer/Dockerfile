@@ -2,17 +2,20 @@ FROM nikolaslada/debian-stretch
 
 MAINTAINER Nikolas Lada <nikolas.lada@gmail.com>
 
-ENV PHP_CLI_DIR=/etc/php/7.1/cli/
+ENV PHP_MODS_DIR=/etc/php/7.0/mods-available
+ENV PHP_CLI_DIR=/etc/php/7.0/cli/
 ENV PHP_CLI_CONF_DIR=${PHP_CLI_DIR}/conf.d
 
-ENV PHP_MODS_DIR=/etc/php/7.0/mods-available
 ENV TZ=Europe/Prague
 
 RUN apt-get update && \
     apt-get dist-upgrade -y && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
+        bash-completion \
+        wget \
         curl \
+        ca-certificates \
         php \
         php-apcu \
         php-bcmath \
@@ -38,17 +41,18 @@ RUN apt-get update && \
         php-xmlrpc \
         php-zip && \
     apt-get update && \
+    cp /etc/skel/.bashrc ~/ && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
-    composer global require "hirak/prestissimo:^0.3" && \
+    composer global require "hirak/prestissimo:^0.3" && \ 
     apt-get clean -y && \
     apt-get autoclean -y && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/* /var/lib/log/* /tmp/* /var/tmp/*
 
-ADD conf.d/devel.ini ${PHP_MODS_DIR}/devel.ini
+ADD conf.d/cli-devel.ini ${PHP_MODS_DIR}/cli-devel.ini
 
-RUN ln -s ${PHP_MODS_DIR}/devel.ini ${PHP_CLI_CONF_DIR}/100-devel.ini
+RUN ln -s ${PHP_MODS_DIR}/cli-devel.ini ${PHP_CLI_CONF_DIR}/100-devel.ini
 
 WORKDIR /srv
 
-CMD ["php"]
+CMD ["bash"]
