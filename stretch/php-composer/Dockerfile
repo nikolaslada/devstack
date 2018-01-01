@@ -49,9 +49,9 @@ RUN apt-get update && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/* /var/lib/log/* /tmp/* /var/tmp/*
 
-ADD conf.d/cli-devel.ini ${PHP_MODS_DIR}/cli-devel.ini
+ADD conf.d/devel.ini ${PHP_MODS_DIR}/devel.ini
 
-RUN ln -s ${PHP_MODS_DIR}/cli-devel.ini ${PHP_CLI_CONF_DIR}/100-devel.ini
+RUN ln -s ${PHP_MODS_DIR}/devel.ini ${PHP_CLI_CONF_DIR}/100-devel.ini
 
 WORKDIR /srv
 
