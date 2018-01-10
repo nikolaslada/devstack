@@ -15,11 +15,30 @@ services:
       - 80:80
       - 443:443
 
+    links:
+      - mariadb:mysql
+
   data:
     image: busybox
 
     volumes:
        - ./data:/srv
+
+  mariadb:
+    image: mariadb:10.3
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: MariadDbRoot
+
+    networks:
+      default:
+        ipv4_address: 172.10.10.3
+
+    ports:
+      - 3306:3306
+
+    volumes:
+      - ./data/mariadb:/var/lib/mysql
 
 networks:
   default:
