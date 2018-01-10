@@ -1,4 +1,4 @@
-FROM nikolaslada/debian-stretch
+FROM nikolaslada/stretch-devstack:debian
 
 MAINTAINER Nikolas Lada <nikolas.lada@gmail.com>
 
