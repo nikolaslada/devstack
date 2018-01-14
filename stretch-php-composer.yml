@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  php-composer:
+    image: nikolaslada/stretch-devstack:php-composer
+
+    volumes_from:
+      - data
+
+  data:
+    image: busybox
+
+    volumes:
+       - ./data:/srv
